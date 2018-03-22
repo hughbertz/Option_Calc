@@ -16,9 +16,9 @@ Calc Features: BUY
 -------------------------------------------------
 *Input: Capital & Ask :-*
 -------------------------------------------------
-<br/>Contracts    : #number of contracts you can afford
-<br/>Investment   : The amount spent on contracts bought
-<br/>Balance      : The amount left in your account. (not Traded)
+<br/>Contracts\t\t\t\t: #number of contracts you can afford
+<br/>Investment\t\t\t: The amount spent on contracts bought
+<br/>Balance\t\t\t\t\t\t: The amount left in your account. (not Traded)
 
 *The ideal price target is at +10% from ask*
 -------------------------------------------------
