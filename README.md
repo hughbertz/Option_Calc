@@ -14,7 +14,7 @@ Buy as many Contracts as you can afford
 
 Calc Features: BUY
 -------------------------------------------------
-*Input Capital & Ask to Calculate the following :-*
+*Input: Capital & Ask :-*
 -------------------------------------------------
 <br/>Contracts    : #number of contracts you can afford
 <br/>Investment   : The amount spent on contracts bought
