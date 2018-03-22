@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OPTION CALCULATOR</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+	<div class="w3-container" style="width: 80%;margin:0 auto;margin-top: 2%;">
+		<div class="w3-row">
+			<div class="w3-col s6">
+				<div class="w3-green w3-center" style="height:460px;margin:1%;padding:1%;" >
+					<div style="width: 80%;margin:0 auto; margin-top: 5%;">
+						<h1>BUY</h1>
+						<table>
+							<tr>
+								<td style="text-align: right;">Capital</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input 	ng-disabled="check" 
+												ng-change="resetCapital()" 
+												type="number" 
+												placeholder="10000" 
+												ng-model="capital">
+									</strong>	
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Ask</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input 	ng-change="getIdealBuyingMetrics()"
+												ng-disabled="check"
+							 					type="number" 
+							 					step = "0.01" 
+							 					placeholder="0.01" 
+							 					ng-model="ask">
+									</strong>	
+								</td>				
+							</tr>
+							<tr>
+								<td style="text-align: right;">Contracts</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{constracts}}</strong></td>
+							</tr>	
+							<tr>
+								<td style="text-align: right;">Actual Purchase Amount</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{actual_purchase_amount}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Ideal Profit Percentage</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{ideal_profit_percentage}}</strong></td>
+							</tr>			
+							<tr>
+								<td style="text-align: right;">Ideal Profit Price / Ideal Sell Price</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{ideal_profit_price}}</strong></td>
+							</tr>	
+							<tr>
+								<td style="text-align: right;">Ideal Profit Amount</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{ideal_profit_amount}}</strong></td>
+							</tr>
+							
+							<tr>
+								<td style="text-align: right;">Ideal Max Loss percentage</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{max_loss_percentage}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Ideal Max Loss Price / Stop Loss</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{max_loss_price}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Ideal Max Loss Amount</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{max_loss_amount}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Ideal New Capital</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{ideal_new_capital}}</strong></td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;">&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;
+									<i style="font-size: 24px;" ng-click="checked()"  ng-show="check" class="fa fa-lock"></i> 
+									<i style="font-size: 24px;" ng-click="checked()"  ng-show="!check" class="fa fa-unlock"></i> 
+								</td>
+							</tr>
+
+						</table>	
+						
+					</div>
+				</div>				
+			</div>
+
+
+
+
+
+
+
+
+
+			<div class="w3-col s6">
+				<div class="w3-dark-grey w3-center" style="height:460px;margin:1%;padding:1%;">
+					<div style="width: 80%;margin:0 auto; margin-top: 5%;">
+						<h1>SELL</h1>						
+						<table>					
+							<tr>
+								<td style="text-align: right;">Current Bid Price</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input
+										ng-change   ="getSellingMetrics()"
+							 			type="number" step = "0.01" placeholder="0.01" ng-model="bid">
+									</strong>	
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Gain</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{current_profit_or_loss_amount.toLocaleString()}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Percentage Gain</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{current_profit_or_loss_percentage}}</strong></td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">New Capital</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{new_capital.toLocaleString()}}</strong></td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;">Dream Percentage Gain</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input 	ng-change="getDreamMetricsByPercentageGain()"
+												ng-disabled="!check"
+							 					type="number" 
+							 					step = "0.01" 
+							 					placeholder="0.01" 
+							 					ng-model="dream_percentage_gain">
+									</strong>	
+								</td>								
+							</tr>			
+							<tr>
+								<td style="text-align: right;">Dream Profit</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input 	ng-change="getDreamMetricsByProfitAmount()"
+												ng-disabled="!check"
+							 					type="number" 
+							 					step = "0.01" 
+							 					placeholder="0.01" 
+							 					ng-model="dream_profit_amount">
+									</strong>	
+								</td>							
+							</tr> 
+						</table>						
+					</div>
+				</div>				
+			</div>
+		</div>		
+	</div>
+
+<hr>
+
+ 
+
+ 
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $timeout) 
+{
+	var isCapitalAdjusted 	= false;
+
+
+	$scope.resetCapital = function(){
+		isCapitalAdjusted = false;
+	};
+
+ 	$scope.checked= function()
+ 	{
+ 		if(!$scope.check && $scope.capital && $scope.ask){ 
+			console.log("its there");
+			$scope.check 	= true; 
+
+			var idealOption = {
+				capital: $scope.capital,
+				ask: $scope.ask,
+				check:$scope.check
+			}; 				
+			localStorage.setItem("savedMetrics", JSON.stringify(idealOption));	 
+ 		}
+ 		else{
+			console.log("i've been UNNNNNN locked");
+			$scope.check = false; 	
+			localStorage.removeItem("savedMetrics");				
+ 		}
+	};
+
+	$scope.getIdealBuyingMetrics = function(){
+		if(!isCapitalAdjusted) {
+			$scope.capital 							= $scope.capital-20;
+			isCapitalAdjusted						= true;		
+		}
+
+		$scope.ideal_profit_percentage				= 0.1;
+		$scope.max_loss_percentage					= 0.05;
+		$scope.constracts							= Math.floor((($scope.capital/$scope.ask)/100));
+		$scope.actual_purchase_amount				= $scope.constracts*$scope.ask*100;
+		$scope.ideal_profit_amount					= ($scope.constracts*100*$scope.ask)*$scope.ideal_profit_percentage;
+		$scope.ideal_profit_price					= $scope.ask+($scope.ask*$scope.ideal_profit_percentage);		
+		$scope.max_loss_price						= $scope.ask-($scope.ask*$scope.max_loss_percentage);
+		$scope.max_loss_amount						= ($scope.constracts*100*$scope.ask)*$scope.max_loss_percentage;
+		$scope.ideal_new_capital					= $scope.ideal_profit_amount+ $scope.capital;
+	};
+
+
+	var savedMetrics = JSON.parse(localStorage.getItem("savedMetrics")); 	
+	if(!(typeof savedMetrics == "undefined" || savedMetrics === null))
+	{
+		if (savedMetrics.check) {
+			$scope.capital 	= savedMetrics.capital;
+			$scope.ask 		= savedMetrics.ask;
+			$scope.check 	= true; 
+			$scope.getIdealBuyingMetrics();			
+		}
+	}
+ 
+
+	$scope.getSellingMetrics = function(){
+
+		$scope.current_profit_or_loss_amount		= ($scope.constracts*100*$scope.bid)-$scope.actual_purchase_amount;
+		$scope.current_profit_or_loss_percentage	= (($scope.current_profit_or_loss_amount/$scope.actual_purchase_amount)*100);
+		$scope.current_profit_or_loss_percentage	= $scope.current_profit_or_loss_percentage.toFixed(2);
+		$scope.new_capital							= ($scope.current_profit_or_loss_amount)+$scope.capital;	 
+	};
+
+	$scope.getDreamMetricsByPercentageGain = function(){
+
+		$scope.current_profit_or_loss_amount		= (($scope.dream_percentage_gain/100)* $scope.actual_purchase_amount);
+		$scope.current_profit_or_loss_percentage	= ($scope.dream_percentage_gain);
+		$scope.new_capital 							= $scope.capital+$scope.current_profit_or_loss_amount;	
+		$scope.bid 									= $scope.new_capital/($scope.constracts*100);
+ 	};
+
+	$scope.getDreamMetricsByProfitAmount = function(){
+
+		$scope.current_profit_or_loss_amount		= $scope.dream_profit_amount;
+		$scope.new_capital 							= $scope.actual_purchase_amount+$scope.dream_profit_amount;	
+		$scope.bid 									= $scope.new_capital/($scope.constracts*100);		
+		$scope.dream_percentage_gain 				= (($scope.new_capital-$scope.actual_purchase_amount)/$scope.actual_purchase_amount)*100;
+		$scope.current_profit_or_loss_percentage	= $scope.dream_percentage_gain;
+	};
+
+});
+</script>
+</body>
+</html>
+ 
+
