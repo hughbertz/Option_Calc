@@ -1,5 +1,5 @@
 # Option_Calc
-Simple HTML & Angular Calculator for Options Trading
+Simple HTML & Angular Calculator for Options Trading<br/>
 *HTML 
 &nbsp;<a href="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">AngularJs</a> 
 &nbsp;<a href="https://www.w3schools.com/w3css/4/w3.css">W3.CSS</a>
