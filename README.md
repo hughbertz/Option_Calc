@@ -1,6 +1,10 @@
 # Option_Calc
 Simple HTML & Angular Calculator for Options Trading
-*HTML <a href="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">AngularJs</a> <a href="https://www.w3schools.com/w3css/4/w3.css">W3.CSS</a><a href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">FontAwesome</a> Sublime Text 3*
+*HTML 
+&nbsp;<a href="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">AngularJs</a> 
+&nbsp;<a href="https://www.w3schools.com/w3css/4/w3.css">W3.CSS</a>
+&nbsp;<a href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">FontAwesome</a> 
+&nbsp;<a href="https://download.sublimetext.com/Sublime%20Text%20Build%203143%20x64.zip">Sublime Text 3*</a>
 
 
 
