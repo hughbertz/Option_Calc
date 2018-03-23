@@ -288,10 +288,11 @@ app.controller('myCtrl', function($scope, $timeout)
 	$scope.getDreamMetricsByAccountValue = function(){
 
 		$scope.bid 									= ($scope.dream_account_value - $scope.balance)/($scope.constracts*100);
-		$scope.current_profit_or_loss_amount		= $scope.dream_account_value-($scope.constracts*100)*$scope.bid;
-		$scope.new_capital 							= $scope.actual_purchase_amount+$scope.dream_profit_amount;	
-		$scope.dream_percentage_gain 				= (($scope.new_capital-$scope.actual_purchase_amount)/$scope.actual_purchase_amount)*100;
+		$scope.dream_percentage_gain 				= (($scope.bid-$scope.ask)/$scope.ask)*100;
+		$scope.new_capital 							= $scope.dream_account_value;	
+		$scope.current_profit_or_loss_amount		= $scope.dream_account_value-$scope.capital;
 		$scope.current_profit_or_loss_percentage	= $scope.dream_percentage_gain;
+		$scope.dream_profit_amount 					= $scope.dream_account_value-$scope.capital;
 	};
 
 
