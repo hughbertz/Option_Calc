@@ -49,6 +49,10 @@
 								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{actual_purchase_amount}}</strong></td>
 							</tr>
 							<tr>
+								<td style="text-align: right;">Balance</td>
+								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{balance}}</strong></td>
+							</tr>
+							<tr>
 								<td style="text-align: right;">&nbsp;&nbsp;</td>
 								<td style="text-align: right;">&nbsp;&nbsp;</td>
 							</tr>
@@ -157,9 +161,18 @@
 								</td>							
 							</tr> 
 							<tr>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-							</tr>							
+								<td style="text-align: right;">Dream Account Value</td>
+								<td style="text-align: left;">&nbsp;
+									<strong>
+										<input 	ng-change="getDreamMetricsByAccountValue()"
+												ng-disabled="!check"
+							 					type="number" 
+							 					step = "0.01" 
+							 					placeholder="0.01" 
+							 					ng-model="dream_account_value">
+									</strong>	
+								</td>							
+							</tr> 							
 
 							<tr>
 								<td style="text-align: right;">&nbsp;&nbsp;</td>
@@ -188,9 +201,6 @@
 	</div>
 
 <hr>
-
-
- 
 
  
 <script>
@@ -233,6 +243,7 @@ app.controller('myCtrl', function($scope, $timeout)
 		$scope.max_loss_price						= $scope.ask-($scope.ask*$scope.max_loss_percentage);
 		$scope.max_loss_amount						= ($scope.constracts*100*$scope.ask)*$scope.max_loss_percentage;
 		$scope.ideal_new_capital					= $scope.ideal_profit_amount+ $scope.capital;
+		$scope.balance 								= $scope.capital - $scope.actual_purchase_amount;
 	};
 	var savedMetrics = JSON.parse(localStorage.getItem("savedMetrics")); 	
 	if(!(typeof savedMetrics == "undefined" || savedMetrics === null))
@@ -273,6 +284,18 @@ app.controller('myCtrl', function($scope, $timeout)
 		}
 
 	};
+
+	$scope.getDreamMetricsByAccountValue = function(){
+
+		$scope.bid 									= ($scope.dream_account_value - $scope.balance)/($scope.constracts*100);
+		$scope.current_profit_or_loss_amount		= $scope.dream_account_value-($scope.constracts*100)*$scope.bid;
+		$scope.new_capital 							= $scope.actual_purchase_amount+$scope.dream_profit_amount;	
+		$scope.dream_percentage_gain 				= (($scope.new_capital-$scope.actual_purchase_amount)/$scope.actual_purchase_amount)*100;
+		$scope.current_profit_or_loss_percentage	= $scope.dream_percentage_gain;
+	};
+
+
+
 });
 </script>
 </body>
