@@ -85,8 +85,8 @@
 							<tr>
 								<td style="text-align: right;">&nbsp;</td>
 								<td style="text-align: right;">&nbsp;&nbsp;
-									<i style="font-size: 24px;" ng-click="checked()"  ng-show="check" class="fa fa-lock"></i> 
-									<i style="font-size: 24px;" ng-click="checked()"  ng-show="!check" class="fa fa-unlock"></i> 
+									<i style="font-size: 24px;cursor: pointer;" ng-click="checked()"  ng-show="check" class="fa fa-lock"></i> 
+									<i style="font-size: 24px;cursor: pointer;" ng-click="checked()"  ng-show="!check" class="fa fa-unlock"></i> 
 								</td>
 							</tr>
 
@@ -95,12 +95,6 @@
 					</div>
 				</div>				
 			</div>
-
-
-
-
-
-
 
 
 
@@ -162,6 +156,30 @@
 									</strong>	
 								</td>							
 							</tr> 
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>							
+
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>							
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>							
+							<tr>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;</td>
+							</tr>							
+							<tr>
+								<td style="text-align: right;">&nbsp;</td>
+								<td style="text-align: right;">&nbsp;&nbsp;Compound&nbsp;
+									<i style="font-size: 24px;cursor: pointer;" ng-click="compound()" class="fa fa-flash"></i>
+								</td>
+							</tr>
+
 						</table>						
 					</div>
 				</div>				
@@ -171,6 +189,7 @@
 
 <hr>
 
+
  
 
  
@@ -179,18 +198,14 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $timeout) 
 {
 	var isCapitalAdjusted 	= false;
-
-
 	$scope.resetCapital = function(){
 		isCapitalAdjusted = false;
 	};
-
  	$scope.checked= function()
  	{
  		if(!$scope.check && $scope.capital && $scope.ask){ 
 			console.log("its there");
 			$scope.check 	= true; 
-
 			var idealOption = {
 				capital: $scope.capital,
 				ask: $scope.ask,
@@ -204,13 +219,11 @@ app.controller('myCtrl', function($scope, $timeout)
 			localStorage.removeItem("savedMetrics");				
  		}
 	};
-
 	$scope.getIdealBuyingMetrics = function(){
 		if(!isCapitalAdjusted) {
 			$scope.capital 							= $scope.capital-20;
 			isCapitalAdjusted						= true;		
 		}
-
 		$scope.ideal_profit_percentage				= 0.1;
 		$scope.max_loss_percentage					= 0.05;
 		$scope.constracts							= Math.floor((($scope.capital/$scope.ask)/100));
@@ -221,8 +234,6 @@ app.controller('myCtrl', function($scope, $timeout)
 		$scope.max_loss_amount						= ($scope.constracts*100*$scope.ask)*$scope.max_loss_percentage;
 		$scope.ideal_new_capital					= $scope.ideal_profit_amount+ $scope.capital;
 	};
-
-
 	var savedMetrics = JSON.parse(localStorage.getItem("savedMetrics")); 	
 	if(!(typeof savedMetrics == "undefined" || savedMetrics === null))
 	{
@@ -234,35 +245,36 @@ app.controller('myCtrl', function($scope, $timeout)
 		}
 	}
  
-
 	$scope.getSellingMetrics = function(){
-
 		$scope.current_profit_or_loss_amount		= ($scope.constracts*100*$scope.bid)-$scope.actual_purchase_amount;
 		$scope.current_profit_or_loss_percentage	= (($scope.current_profit_or_loss_amount/$scope.actual_purchase_amount)*100);
 		$scope.current_profit_or_loss_percentage	= $scope.current_profit_or_loss_percentage.toFixed(2);
 		$scope.new_capital							= ($scope.current_profit_or_loss_amount)+$scope.capital;	 
 	};
-
 	$scope.getDreamMetricsByPercentageGain = function(){
-
 		$scope.current_profit_or_loss_amount		= (($scope.dream_percentage_gain/100)* $scope.actual_purchase_amount);
 		$scope.current_profit_or_loss_percentage	= ($scope.dream_percentage_gain);
 		$scope.new_capital 							= $scope.capital+$scope.current_profit_or_loss_amount;	
 		$scope.bid 									= $scope.new_capital/($scope.constracts*100);
  	};
-
 	$scope.getDreamMetricsByProfitAmount = function(){
-
 		$scope.current_profit_or_loss_amount		= $scope.dream_profit_amount;
 		$scope.new_capital 							= $scope.actual_purchase_amount+$scope.dream_profit_amount;	
 		$scope.bid 									= $scope.new_capital/($scope.constracts*100);		
 		$scope.dream_percentage_gain 				= (($scope.new_capital-$scope.actual_purchase_amount)/$scope.actual_purchase_amount)*100;
 		$scope.current_profit_or_loss_percentage	= $scope.dream_percentage_gain;
 	};
+	
+	$scope.compound = function(){
+		if ($scope.bid) 
+		{
+			$scope.capital 								= $scope.new_capital;
+			$scope.check 								= false; 			
+		}
 
+	};
 });
 </script>
 </body>
 </html>
  
-
