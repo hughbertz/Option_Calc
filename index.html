@@ -187,8 +187,8 @@
 								<td style="text-align: left;">&nbsp;&nbsp;{{initial_capital}}</td>
 							</tr>							
 							<tr>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">Cummulative Gain</td>
+								<td style="text-align: left;">&nbsp;&nbsp;{{cummulative_gain}}</td>
 							</tr>							
 							<tr>
 								<td style="text-align: right;">&nbsp;</td>
@@ -307,14 +307,15 @@ app.controller('myCtrl', function($scope, $timeout)
 				$scope.initial_capital					= $scope.capital;	
 				$scope.capital 							= $scope.new_capital;	
 				$scope.round_trip_trades 				= $scope.round_trip_trades+1;
-				$scope.total_percentage_gain			= $scope.current_profit_or_loss_percentage;						
+				$scope.total_percentage_gain			= $scope.current_profit_or_loss_percentage;		
+				$scope.cummulative_gain					= $scope.capital - $scope.initial_capital;
 			}
 			else
 			{
 				$scope.capital 							= $scope.new_capital;					
 				$scope.round_trip_trades 				= $scope.round_trip_trades+1;			
-				$scope.total_percentage_gain			= parseFloat($scope.total_percentage_gain)  + parseFloat($scope.current_profit_or_loss_percentage) ;				
-					
+				$scope.total_percentage_gain			= ((parseFloat($scope.capital)  - parseFloat($scope.initial_capital))/parseFloat($scope.initial_capital))*100;
+				$scope.cummulative_gain					= $scope.capital - $scope.initial_capital;					
 			}	
 
 		}
