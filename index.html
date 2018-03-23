@@ -122,7 +122,7 @@
 								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{current_profit_or_loss_amount.toLocaleString()}}</strong></td>
 							</tr>
 							<tr>
-								<td style="text-align: right;">Percentage Gain</td>
+								<td style="text-align: right;">%age Gain</td>
 								<td style="text-align: left;">&nbsp;&nbsp;<strong>{{current_profit_or_loss_percentage}}</strong></td>
 							</tr>
 							<tr>
@@ -173,18 +173,18 @@
 									</strong>	
 								</td>							
 							</tr> 							
+							<tr>
+								<td style="text-align: right;">Total %age</td>
+								<td style="text-align: left;">&nbsp;&nbsp;{{total_percentage_gain}}</td>
+							</tr>							
 
 							<tr>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;"># Trades</td>
+								<td style="text-align: left;">&nbsp;&nbsp;{{round_trip_trades}}</td>
 							</tr>							
 							<tr>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-							</tr>							
-							<tr>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;</td>
+								<td style="text-align: right;">Initial Capital</td>
+								<td style="text-align: left;">&nbsp;&nbsp;{{initial_capital}}</td>
 							</tr>							
 							<tr>
 								<td style="text-align: right;">&nbsp;&nbsp;</td>
@@ -192,7 +192,7 @@
 							</tr>							
 							<tr>
 								<td style="text-align: right;">&nbsp;</td>
-								<td style="text-align: right;">&nbsp;&nbsp;Compound&nbsp;
+								<td style="text-align: right;">&nbsp;&nbsp;
 									<i style="font-size: 24px;cursor: pointer;" ng-click="compound()" class="fa fa-flash"></i>
 								</td>
 							</tr>
@@ -225,7 +225,8 @@ app.directive('ngEnter', function () {
 
 app.controller('myCtrl', function($scope, $timeout) 
 {
-	var isCapitalAdjusted 	= false;
+	var isCapitalAdjusted 						= false;
+	$scope.round_trip_trades 					= 0;	
 	$scope.resetCapital = function(){
 		isCapitalAdjusted = false;
 	};
@@ -237,7 +238,8 @@ app.controller('myCtrl', function($scope, $timeout)
 			var idealOption = {
 				capital: $scope.capital,
 				ask: $scope.ask,
-				check:$scope.check
+				check:$scope.check,
+				round_trip_trades:$scope.round_trip_trades
 			}; 				
 			localStorage.setItem("savedMetrics", JSON.stringify(idealOption));	 
  		}
@@ -300,10 +302,22 @@ app.controller('myCtrl', function($scope, $timeout)
 	$scope.compound = function(){
 		if ($scope.bid) 
 		{
-			$scope.capital 								= $scope.new_capital;
-			$scope.check 								= false; 			
-		}
+			$scope.check 								= false; 	
+			if($scope.round_trip_trades == 0){
+				$scope.initial_capital					= $scope.capital;	
+				$scope.capital 							= $scope.new_capital;	
+				$scope.round_trip_trades 				= $scope.round_trip_trades+1;
+				$scope.total_percentage_gain			= $scope.current_profit_or_loss_percentage;						
+			}
+			else
+			{
+				$scope.capital 							= $scope.new_capital;					
+				$scope.round_trip_trades 				= $scope.round_trip_trades+1;			
+				$scope.total_percentage_gain			= parseFloat($scope.total_percentage_gain)  + parseFloat($scope.current_profit_or_loss_percentage) ;				
+					
+			}	
 
+		}
 	};
 
 	$scope.getDreamMetricsByAccountValue = function(){
